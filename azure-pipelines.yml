@@ -1,0 +1,11 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Gradle@2
+  inputs:
+    workingDirectory: '$(Build.SourcesDirectory)'
+    tasks: 'build'
