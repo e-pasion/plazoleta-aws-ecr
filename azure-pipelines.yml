@@ -1,7 +1,22 @@
 trigger:
-- main
+  - main
 
 pool:
   vmImage: 'ubuntu-latest'
-stages:
-  - stage: 
+
+steps:
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: ''  # Ruta relativa a la raíz del repositorio, si es necesario
+    gradleWrapperFile: 'gradlew'
+    options: '-Xmx3072m'  # Opciones de Gradle, según sea necesario
+    tasks: 'clean build'
+  displayName: 'Ejecutar tarea Gradle'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.SourcesDirectory)/build/libs'
+    artifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publicar artefactos de compilación'
